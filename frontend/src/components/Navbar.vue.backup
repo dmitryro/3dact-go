@@ -1,0 +1,169 @@
+<template>
+    <b-navbar class="navbar is-fixed-top">
+        <template slot="brand">
+          <b-navbar-item id="french-ai" tag="router-link" :to="{ name: 'products' }">
+            <span id="website-icon">
+              -- 🧠 -
+            </span>
+            <span id="website-name-first">
+              3D
+            </span>
+            <span id="website-name-sep">
+              -
+            </span>
+            <span id="website-name-last">
+              Act
+            </span>
+          </b-navbar-item>
+        </template>
+        <template slot="start">
+            <b-navbar-item tag="router-link" :to="{ name: 'home' }">
+              Home
+            </b-navbar-item>
+            <b-navbar-dropdown tag="router-link" :to="{ name: 'products' }" label="Product"  class="navbar-item has-dropdown" style="z-index: 100;">
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/product/features">
+                   Features
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/product/integrations">
+                   Integrations
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/product/usecases">
+                   Use Cases
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/product/whyus">
+                   Why Us
+                  </b-dropdown-item>              
+            </b-navbar-dropdown>
+
+            <b-navbar-item tag="router-link" :to="{ name: 'pricing' }">
+              Pricing
+            </b-navbar-item>
+
+
+              <b-navbar-dropdown label="Solutions" class="navbar-item has-dropdown" style="z-index: 100;">
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/solutions/howitworks">
+                   How it works?
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/solutions/howtochoose">
+                   How to choose?
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/solutions/sales">
+                   Sales
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/solutions/support">
+                   Support
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/solutions/remote">
+                   Remote Teams
+                  </b-dropdown-item>
+                  <hr class="navbar-divider" style="z-index: 100;">
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/solutions/version">
+                    Version 0.9.0
+                  </b-dropdown-item>
+              </b-navbar-dropdown>
+
+
+              <b-navbar-item tag="router-link" :to="{ name: 'customers' }">
+                  Customers
+              </b-navbar-item>
+
+
+              <b-navbar-dropdown label="Resources" class="navbar-item has-dropdown" :to="{ name: 'resources' }" style="z-index: 100;" aria-controls="dropdown-menu2">
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/resources/blog">
+                          <span class="icon is-small has-text-primary">
+                                <i class="fas fa-newspaper"></i>
+                          </span>
+                          <span class="ml-3">Blog</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/resources/docs">
+                  <span class="icon is-small has-text-success">
+                      <i class="fas fa-book"></i>
+                  </span> 
+                  <span class="ml-3">Documentation</span>
+
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/resources/faq">
+                  <span class="icon is-small has-text-warning">
+                      <i class="fas fa-comment"></i>
+                  </span>
+                  <span class="ml-3">FAQ</span>
+                  </b-dropdown-item>
+                  <b-dropdown-item class="navbar-item" style="z-index: 100;" href="/resources/links">
+                     <span class="icon is-small has-text-link"> 
+                     <i class="fas fa-link"></i>
+                     </span> 
+                     <span class="ml-3">Links</span>
+                  </b-dropdown-item>
+              </b-navbar-dropdown>
+
+
+        </template>
+
+        <template slot="end">
+            <b-navbar-item tag="div">
+                 <b-tooltip
+                 type="is-light"
+                 label="Sign In"
+                 position="is-bottom"
+                 >
+
+                 <span class="icon is-small has-text-primary" data-tooltip="Sign In">
+                     <i class="fas fa-sign-in-alt"></i>
+                 </span>
+                 </b-tooltip>
+
+
+                 <span class="ml-4 mr-4">|</span>
+
+
+                 <b-tooltip
+                 type="is-light"
+                 label="Contact Us"
+                 position="is-bottom"
+                 >
+                 <span class="icon is-small has-text-primary" data-tooltip="Contact Us">
+                     <i class="fas fa-envelope"></i>
+                 </span>
+                 </b-tooltip>
+                  <span class="ml-6"></span>
+
+            </b-navbar-item>
+        </template>
+    </b-navbar>
+</template>
+
+<script>
+export default {
+  name: 'Navbar',
+  data() {
+    return {
+      open: false,
+    };
+  },
+};
+</script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+  #french-ai {
+    font-family: 'Bree Serif', serif;
+  }
+
+  #website-icon {
+    color: #fff;
+  }
+
+  #website-name-first {
+    color: #1e3799;
+  }
+
+  #website-name-sep {
+    color: #f3f3f3;
+  }
+
+  #website-name-last {
+    color: #eb2f06;
+  }
+
+</style>

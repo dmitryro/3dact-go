@@ -1,0 +1,20 @@
+.footer {
+    background: #292A3A;
+    color: #FFFFFF;
+}
+
+.footer .title {
+    margin: 1.2em 0em 1.2em 0em;
+    font-size:1.4em;
+    color: #FFFFFF;
+}
+
+.footer a {
+    text-decoration:none;
+    color:#BFBFC1;
+}
+
+.footer a:hover {
+    text-decoration:none;
+    color:#D9435E;
+}
