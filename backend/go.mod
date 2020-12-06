@@ -14,6 +14,30 @@ replace 3dact.com/config => ./config
 
 replace 3dact.com/config/dbconnect => ./config/dbconnect
 
+replace 3dact.com/chat => ./chat
+
+replace 3dact.com/chat/models => ./chat/models
+
+replace 3dact.com/chat/dao => ./chat/dao
+
+replace 3dact.com/chat/api => ./chat/api
+
+replace 3dact.com/user => ./user
+
+replace 3dact.com/user/models => ./user/models
+
+replace 3dact.com/user/dao => ./user/dao
+
+replace 3dact.com/user/api => ./user/api
+
+replace 3dact.com/messaging => ./messaging
+
+replace 3dact.com/messaging/models => ./messaging/models
+
+replace 3dact.com/messaging/dao => ./messaging/dao
+
+replace 3dact.com/messaging/api => ./messaging/api
+
 require (
 	github.com/callicoder/go-docker-compose v0.0.0-20190725022912-cfca182529bc
 	github.com/go-chi/chi v1.5.0 // indirect
@@ -33,5 +57,8 @@ require (
 	3dact.com/blog/dao v0.0.0-00010101000000-000000000000
 	3dact.com/blog/models v0.0.0-00010101000000-000000000000
 	3dact.com/config v0.0.0-00010101000000-000000000000
+    3dact.com/user v0.0.0-00010101000000-000000000000
+    3dact.com/chat v0.0.0-00010101000000-000000000000
+    3dact.com/messaging v0.0.0-00010101000000-000000000000
 	xorm.io/xorm v1.0.5 // indirect
 )

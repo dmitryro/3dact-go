@@ -32,7 +32,7 @@ type Comment struct {
     Text     string     `json:"text" gorm:"<-:create gorm:"<-:update`
     PostId int  `json:"parent_id" gorm:"foreignKey:AttitudeRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
     Parent *Comment `json:",omitempty" gorm:"foreignKey:ParentId"` 
-    ParentId   int        `json:"parent_id" gorm:"foreignKey:AttitudeRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
+    ParentId   int        `json:"parent_id" gorm:"foreignKey:CommentRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
     Id       int        `json:"id" gorm:"<-:create gorm:"<-:update gorm:"primaryKey`
     Score    int        `json:"score" gorm:"<-:create gorm:"<-:update`
     CreatedAt    time.Time `json:"created_at" gorm:"<-:create gorm:"<-:update"`

@@ -37,6 +37,18 @@ CREATE TABLE attitudes(
         UNIQUE(id)
     );
 
+CREATE SEQUENCE relationship_id_seq;
+
+CREATE TABLE relationships(
+        id integer NOT NULL DEFAULT nextval('relationship_id_seq'),
+        name varchar(75) NOT NULL,
+        code varchar(10) NOT NULL,
+        created_at timestamptz DEFAULT NOW(),
+        updated_at timestamptz DEFAULT NOW(),
+        deleted_at timestamptz,
+        UNIQUE(id)
+    );
+
 CREATE SEQUENCE post_id_seq;
 
 CREATE TABLE posts (
@@ -103,12 +115,38 @@ CREATE TABLE users (
         email varchar(75) NOT NULL,
         bio varchar(2048),
         password varchar(128) NOT NULL,
+        in_chat BOOLEAN DEFAULT FALSE, 
         is_staff BOOLEAN NOT NULL,
+        is_admin BOOLEAN DEFAULT FALSE,
+        is_cleared BOOLEAN DEFAULT FALSE,
+        is_suspended BOOLEAN DEFAULT FALSE,
         is_active BOOLEAN NOT NULL,
         is_superuser BOOLEAN NOT NULL,
-        last_login date NOT NULL,
-        date_joined date NOT NULL
+        last_login timestamptz,
+        date_joined date NOT NULL,
+        password_recovery_key varchar(500),
+        activation_key varchar(500),
+        profile_image varchar(1000),
+        avatar_image varchar(1000),
+        avatar_thumbnail varchar(1000),
+        UNIQUE(id)
     );
+
+CREATE SEQUENCE peer_id_seq;
+
+CREATE TABLE peers (
+        id integer NOT NULL DEFAULT nextval('peer_id_seq'),
+        relation_id integer NOT NULL,
+        FOREIGN KEY(relation_id) REFERENCES relationships(id) ON DELETE CASCADE,
+        initiator_id integer NOT NULL,
+        FOREIGN KEY(initiator_id) REFERENCES users(id) ON DELETE CASCADE,
+        acceptor_id integer NOT NULL,
+        FOREIGN KEY(acceptor_id) REFERENCES users(id) ON DELETE CASCADE,
+        created_at timestamptz DEFAULT NOW(),
+        updated_at timestamptz DEFAULT NOW(),
+        deleted_at timestamptz,
+        UNIQUE(id) 
+);
 
 CREATE SEQUENCE contact_id_seq;
 
@@ -156,3 +194,9 @@ OWNED BY addresses.id;
 
 ALTER SEQUENCE comment_id_seq
 OWNED BY comments.id;
+
+ALTER SEQUENCE relationship_id_seq
+OWNED BY relationships.id;
+
+ALTER SEQUENCE peer_id_seq
+OWNED BY peers.id;
