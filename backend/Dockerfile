@@ -14,7 +14,7 @@ WORKDIR /app
 
 # Copy the source from the current directory to the Working Directory inside the container
 COPY . .
-COPY ./src/models /usr/local/go/src/models
+#COPY ./src/models /usr/local/go/src/models
 # Build the Go app
 RUN go get -d github.com/gorilla/mux && \
     go get -d github.com/jackc/pgx && \

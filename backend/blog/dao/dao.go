@@ -11,10 +11,6 @@ import (
 
 func CreatePost(post models.Post) models.Post{
      conn := dbconnect.Connect()
-     //username := os.Getenv("POSTGRES_USER") 
-     //password := os.Getenv("POSTGRES_PASSWORD") 
-     //dbName := os.Getenv("POSTGRES_DB") 
-     //dbHost := os.Getenv("POSTGRES_HOST") 
      db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
      if err != nil {
          msg := fmt.Sprintf("Error connecting to database - %s", err)
@@ -26,10 +22,6 @@ func CreatePost(post models.Post) models.Post{
 
 func CreateAttitude(attitude models.Attitude) models.Attitude{
      conn := dbconnect.Connect()
-     //username := os.Getenv("POSTGRES_USER") 
-     //password := os.Getenv("POSTGRES_PASSWORD") 
-     //dbName := os.Getenv("POSTGRES_DB") 
-     //dbHost := os.Getenv("POSTGRES_HOST") 
      db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
      if err != nil {
          msg := fmt.Sprintf("Error connecting to database - %s", err)
@@ -54,27 +46,23 @@ func ReadAllAttitudes() []models.Attitude{
 func ReadAllPosts() []models.Post{
      posts := []models.Post{}
      conn := dbconnect.Connect()
-     //username := os.Getenv("POSTGRES_USER") 
-     //password := os.Getenv("POSTGRES_PASSWORD") 
-     //dbName := os.Getenv("POSTGRES_DB") 
-     //dbHost := os.Getenv("POSTGRES_HOST") 
      db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
      if err != nil {
          msg := fmt.Sprintf("Error connecting to database - %s", err)
          fmt.Println(msg)
      }
      db.Find(&posts)
-     
+     for i:=0; i < len(posts); i++ {
+          var attitude = models.Attitude{}
+          db.First(&attitude, posts[i].AttitudeId) 
+          posts[i].Attitude = attitude
+     }
      return posts
 }
 
 func ReadAttitudeByCode(code string) models.Attitude{
      var attitude = models.Attitude{}
      conn := dbconnect.Connect()
-     //username := os.Getenv("POSTGRES_USER") 
-     //password := os.Getenv("POSTGRES_PASSWORD") 
-     //dbName := os.Getenv("POSTGRES_DB") 
-     //dbHost := os.Getenv("POSTGRES_HOST") 
      db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
      if err != nil {
          msg := fmt.Sprintf("Error connecting to database - %s", err)
@@ -88,10 +76,6 @@ func ReadAttitudeByCode(code string) models.Attitude{
 func ReadAttitudeById(id int) models.Attitude{
      var attitude = models.Attitude{} 
      conn := dbconnect.Connect()
-     //username := os.Getenv("POSTGRES_USER") 
-     //password := os.Getenv("POSTGRES_PASSWORD") 
-     //dbName := os.Getenv("POSTGRES_DB") 
-     //dbHost := os.Getenv("POSTGRES_HOST") 
      db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
      if err != nil {
          msg := fmt.Sprintf("Error connecting to database - %s", err)
@@ -105,10 +89,6 @@ func ReadPostById(id int) models.Post{
      var post = models.Post{}
      var attitude = models.Attitude{}
      conn := dbconnect.Connect()
-     //username := os.Getenv("POSTGRES_USER") 
-     //password := os.Getenv("POSTGRES_PASSWORD") 
-     //dbName := os.Getenv("POSTGRES_DB") 
-     //dbHost := os.Getenv("POSTGRES_HOST") 
      db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
      if err != nil {
          msg := fmt.Sprintf("Error connecting to database - %s", err)
