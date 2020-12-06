@@ -45,6 +45,13 @@ type AttitudeRequest struct {
     Code        string `json:"code"`
 }
 
+type CommentRequest struct {
+    Text string `json:"text"`
+    AttitudeId    int `json:"attitude_id"`
+    ParentId    int `json:"parent_id"`
+    PostId    int `json:"post_id"`
+}
+
 func init_attitudes() {
     att = make(map[string]models.Attitude)
     att["love"] = models.Attitude{
@@ -95,6 +102,12 @@ func getAllAttitudesHandler(w http.ResponseWriter, r *http.Request) {
     respondWithJson(w, http.StatusOK, posts)
 }
 
+func getAllCommentsHandler(w http.ResponseWriter, r *http.Request) {
+    comments := dao.ReadAllComments()
+    respondWithJson(w, http.StatusOK, comments)
+}
+
+
 func createAttitudeHandler(w http.ResponseWriter, r *http.Request) {
     // Double check it's a post request being made
     if r.Method != http.MethodPost {
@@ -124,6 +137,39 @@ func createAttitudeHandler(w http.ResponseWriter, r *http.Request) {
 
     dao.CreateAttitude(att)
     respondWithJson(w, http.StatusOK, att)
+}
+
+func createCommentHandler(w http.ResponseWriter, r *http.Request) {
+    // Double check it's a post request being made
+    if r.Method != http.MethodPost {
+        w.WriteHeader(http.StatusMethodNotAllowed)
+        fmt.Fprintf(w, "invalid_http_method")
+        return
+    }
+
+    reqBody, _ := ioutil.ReadAll(r.Body)
+    var cr  CommentRequest
+    json.Unmarshal(reqBody, &cr)
+  
+    currentTime := time.Now()
+    dateString := currentTime.Format("Mon, 02 Jan 2006 15:04:05 MST")
+    time, err := time.Parse(time.RFC1123, dateString);
+
+    if err!=nil {
+        fmt.Println("Error while parsing date :", err);
+    }
+
+    var comment = models.Comment{
+                            Text: cr.Text,
+                            ParentId: cr.ParentId,
+                            PostId: cr.PostId,
+                            AttitudeId: cr.AttitudeId,
+                            CreatedAt: time,
+                            UpdatedAt: time,
+              }
+
+    dao.CreateComment(comment)
+    respondWithJson(w, http.StatusOK, comment)
 }
 
 
@@ -158,7 +204,6 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
     attitude.UpdatedAt = time
 
     var p = models.Post{
-                            Id:1,
                             Title: pr.Title,
                             Body: pr.Body,
                             Attitude: attitude,
@@ -170,6 +215,28 @@ func createPostHandler(w http.ResponseWriter, r *http.Request) {
 
     dao.CreatePost(p) 
     respondWithJson(w, http.StatusOK, p)
+}
+
+func getCommentByIdHandler(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r) // mux library to get all parameters
+    id, _ := strconv.Atoi(params["id"])
+    var comment = dao.ReadCommentById(id)
+    respondWithJson(w, http.StatusOK, comment)
+}
+
+
+func getAllCommentsByPostIdHandler(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r) // mux library to get all parameters
+    id, _ := strconv.Atoi(params["id"])
+    var comments = dao.ReadCommentsByPostId(id)
+    respondWithJson(w, http.StatusOK, comments)
+}
+
+func getAllCommentsByParentIdHandler(w http.ResponseWriter, r *http.Request) {
+    params := mux.Vars(r) // mux library to get all parameters
+    id, _ := strconv.Atoi(params["id"])
+    var comments = dao.ReadCommentsByParentId(id)
+    respondWithJson(w, http.StatusOK, comments)
 }
 
 func getPostByIdHandler(w http.ResponseWriter, r *http.Request) {
@@ -217,7 +284,13 @@ func Register() {
     r.HandleFunc("/posts/{id}", getPostByIdHandler).Methods("GET")
     r.HandleFunc("/posts", getAllPostsHandler).Methods("GET")
     r.HandleFunc("/posts", createPostHandler).Methods("POST")
-     
+
+    r.HandleFunc("/comments", getAllCommentsHandler).Methods("GET")
+    r.HandleFunc("/comments_post/{id}", getAllCommentsByPostIdHandler).Methods("GET")
+    r.HandleFunc("/comments_parent/{id}", getAllCommentsByParentIdHandler).Methods("GET")
+    r.HandleFunc("/comment/{id}", getCommentByIdHandler).Methods("GET")    
+    r.HandleFunc("/comments", createCommentHandler).Methods("POST") 
+    
     r.HandleFunc("/attitudes/{id}", getAttitudeByIdHandler).Methods("GET")
     r.HandleFunc("/attitudes", getAllAttitudesHandler).Methods("GET")
     r.HandleFunc("/attitudes", createAttitudeHandler).Methods("POST")

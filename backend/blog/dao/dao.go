@@ -8,6 +8,17 @@ import (
     "gorm.io/driver/postgres"
 )
 
+func CreateComment(comment models.Comment) models.Comment{
+     conn := dbconnect.Connect()
+     db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
+     if err != nil {
+         msg := fmt.Sprintf("Error connecting to database - %s", err)
+         fmt.Println(msg)
+     }
+     db.Omit("Id", "CreatedAt").Create(&comment) // pass pointer of data to Crea
+     return comment
+}
+
 
 func CreatePost(post models.Post) models.Post{
      conn := dbconnect.Connect()
@@ -41,6 +52,24 @@ func ReadAllAttitudes() []models.Attitude{
      }
      db.Find(&attitudes)
      return attitudes
+}
+
+func ReadAllComments() []models.Comment{
+     var comments = []models.Comment{}
+     conn := dbconnect.Connect()
+     db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
+     if err != nil {
+         msg := fmt.Sprintf("Error connecting to database - %s", err)
+         fmt.Println(msg)
+     }
+     db.Find(&comments)
+
+     for i:=0; i < len(comments); i++ {
+          var attitude = models.Attitude{}
+          db.First(&attitude, comments[i].AttitudeId)
+          comments[i].Attitude = attitude
+     }
+     return comments
 }
 
 func ReadAllPosts() []models.Post{
@@ -84,6 +113,57 @@ func ReadAttitudeById(id int) models.Attitude{
     db.Where(&models.Attitude{Id: id}).First(&attitude)
     return attitude
 }
+
+func ReadCommentsByPostId(id int) []models.Comment{
+     var comments = []models.Comment{}
+     conn := dbconnect.Connect()
+     db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
+     if err != nil {
+         msg := fmt.Sprintf("Error connecting to database - %s", err)
+         fmt.Println(msg)
+     }
+     db.Where(&models.Comment{PostId: id}).Find(&comments)
+     for i:=0; i < len(comments); i++ {
+          var attitude = models.Attitude{}
+          db.First(&attitude, comments[i].AttitudeId)
+          comments[i].Attitude = attitude
+     }
+     return comments
+}
+
+func ReadCommentsByParentId(id int) []models.Comment{
+     var comments = []models.Comment{}
+     conn := dbconnect.Connect()
+     db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
+     if err != nil {
+         msg := fmt.Sprintf("Error connecting to database - %s", err)
+         fmt.Println(msg)
+     }
+     db.Where(&models.Comment{ParentId: id}).Find(&comments)
+     for i:=0; i < len(comments); i++ {
+          var attitude = models.Attitude{}
+          db.First(&attitude, comments[i].AttitudeId)
+          comments[i].Attitude = attitude
+     }
+     return comments
+}
+
+func ReadCommentById(id int) models.Comment{
+     var comment = models.Comment{}
+     conn := dbconnect.Connect()
+     db, err := gorm.Open(postgres.Open(conn.Dsn), &gorm.Config{})
+     if err != nil {
+         msg := fmt.Sprintf("Error connecting to database - %s", err)
+         fmt.Println(msg)
+     }
+     db.First(&comment, id)
+     var attitude = models.Attitude{}
+     db.First(&attitude, comment.AttitudeId)
+     comment.Attitude = attitude
+     return comment
+}
+
+
 
 func ReadPostById(id int) models.Post{
      var post = models.Post{}

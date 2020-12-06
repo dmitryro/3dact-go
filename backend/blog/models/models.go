@@ -26,14 +26,20 @@ type Post struct {
     DeletedAt time.Time `json:"deleted_at" gorm:"<-:create gorm:"<-:update`
     AttitudeId int `json:"attitude_id" gorm:"foreignKey:AttitudeRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
     Attitude Attitude `json:",omitempty" gorm:"foreignKey:AttitudeId"`
-    // use AttitudeRefer as foreign key
 }
 
 type Comment struct {
-    Text     string     `json:"text"`
-    Parent   int        `json:"parent"`
-    Id       int        `json:"id"`
-    Children []*Comment `json:"children"`
-    Score    int        `json:"score"`
+    Text     string     `json:"text" gorm:"<-:create gorm:"<-:update`
+    PostId int  `json:"parent_id" gorm:"foreignKey:AttitudeRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
+    Parent *Comment `json:",omitempty" gorm:"foreignKey:ParentId"` 
+    ParentId   int        `json:"parent_id" gorm:"foreignKey:AttitudeRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
+    Id       int        `json:"id" gorm:"<-:create gorm:"<-:update gorm:"primaryKey`
+    Score    int        `json:"score" gorm:"<-:create gorm:"<-:update`
+    CreatedAt    time.Time `json:"created_at" gorm:"<-:create gorm:"<-:update"`
+    UpdatedAt    time.Time `json:"updated_at" gorm:"<-:create gorm:"<-:update"`
+    DeletedAt time.Time `json:"deleted_at" gorm:"<-:create gorm:"<-:update"`
+    Hide bool `json:"hide" gorm:"<-:create gorm:"<-:update"`
+    AttitudeId int `json:"attitude_id" gorm:"foreignKey:AttitudeRefer" constraint:OnUpdate:CASCADE,OnDelete:SET NULL;`
+    Attitude Attitude `json:",omitempty" gorm:"foreignKey:AttitudeId"`
     mux      sync.Mutex
 }

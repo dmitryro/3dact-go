@@ -54,6 +54,23 @@ CREATE TABLE posts (
         UNIQUE(id)
    );
 
+CREATE SEQUENCE comment_id_seq;
+
+CREATE TABLE comments (
+        id integer  NOT NULL DEFAULT nextval('comment_id_seq'),
+        text varchar(5000) NOT NULL,
+        score integer,
+        parent_id int REFERENCES comments(id) ON UPDATE CASCADE ON DELETE CASCADE DEFAULT NULL,
+        post_id int NOT NULL  REFERENCES posts(id) ON UPDATE CASCADE ON DELETE CASCADE,
+        attitude_id integer,
+        FOREIGN KEY(attitude_id) REFERENCES attitudes(id) ON DELETE CASCADE,
+        created_at timestamptz DEFAULT NOW(),
+        updated_at timestamptz DEFAULT NOW(),
+        deleted_at timestamptz,
+        hide boolean not null default false,
+        UNIQUE(id)
+   );
+
 CREATE SEQUENCE item_id_seq;
 
 CREATE TABLE items (
@@ -137,4 +154,5 @@ OWNED BY items.id;
 ALTER SEQUENCE address_id_seq
 OWNED BY addresses.id;
 
-
+ALTER SEQUENCE comment_id_seq
+OWNED BY comments.id;
