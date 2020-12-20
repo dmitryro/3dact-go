@@ -1,4 +1,4 @@
-module 3dact.com/messaging/api
+module 3dact.com/actions/api
 
 go 1.15
 

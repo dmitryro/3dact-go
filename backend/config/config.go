@@ -2,8 +2,8 @@ package config
 
 import (
 	"log" // to print log
-
-	"github.com/BurntSushi/toml" // to read config.toml
+    "os"
+    "github.com/go-redis/redis"
 )
 
 // Represent database server n credentials
@@ -12,9 +12,31 @@ type Config struct {
 	Database string
 }
 
-// Read and parse the configuration file
-func (c *Config) Read() {
-	if _, err := toml.DecodeFile("config.toml", &c); err != nil { // decode file config.toml
-		log.Fatal(err)
-	}
+func getEnv(key, defaultValue string) string {
+    value := os.Getenv(key)
+    if value == "" {
+        return defaultValue
+    }
+    return value
 }
+
+
+func Start() {
+
+    // Create Redis Client
+
+    client := redis.NewClient(&redis.Options{
+        Addr:     getEnv("REDIS_URL", "localhost:6379"),
+        Password: getEnv("REDIS_PASSWORD", ""),
+        DB:       0,
+    })
+
+    _, err := client.Ping().Result()
+    if err != nil {
+        log.Fatal(err)
+    }
+
+}
+
+
+

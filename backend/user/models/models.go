@@ -27,6 +27,9 @@ type User struct {
     ProfileImage string `json: "profile_image"`
     AvatarImage string `json: "avatar_image"`
     AvatarThumbnail string `json: "avatar_thumbnail"`
+    CreatedAt    time.Time `json:"created_at" gorm:"<-:create gorm:"<-:update`
+    UpdatedAt    time.Time `json:"updated_at" gorm:"<-:create gorm:"<-:update`
+    DeletedAt time.Time `json:"deleted_at" gorm:"<-:create gorm:"<-:update`
 }
 
 type Relationship struct {

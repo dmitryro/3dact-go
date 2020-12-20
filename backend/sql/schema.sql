@@ -129,6 +129,9 @@ CREATE TABLE users (
         profile_image varchar(1000),
         avatar_image varchar(1000),
         avatar_thumbnail varchar(1000),
+        created_at timestamptz DEFAULT NOW(),
+        updated_at timestamptz DEFAULT NOW(),
+        deleted_at timestamptz,
         UNIQUE(id)
     );
 

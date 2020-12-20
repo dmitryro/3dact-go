@@ -2,22 +2,85 @@ package main
 
 
 import (
-    "fmt"
-    "3dact.com/blog"
-    "3dact.com/blog/models"
-    "3dact.com/blog/api"
+    "context"
+    "time"
+    "log"
+    "os"
+    "syscall"
+    "os/signal"
+    "net/http"
+    "reflect"
+    "github.com/gorilla/mux"
+    "github.com/go-redis/redis"
+    blog_api "3dact.com/blog/api"
+    user_api "3dact.com/user/api"
 )
+
+func getEnv(key, defaultValue string) string {
+    value := os.Getenv(key)
+    if value == "" {
+        return defaultValue
+    }
+    return value
+}
+
+func Register() {
+    // Create Redis Client
+
+    client := redis.NewClient(&redis.Options{
+        Addr:     getEnv("REDIS_URL", "localhost:6379"),
+        Password: getEnv("REDIS_PASSWORD", ""),
+        DB:       0,
+    })
+
+    _, err := client.Ping().Result()
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // Create Server and Route Handlers
+    r := mux.NewRouter()
+
+    blog_api.Register(r)
+    user_api.Register(r)
+
+    srv := &http.Server{
+        Handler:      r,
+        Addr:         ":8080",
+        ReadTimeout:  10 * time.Second,
+        WriteTimeout: 10 * time.Second,
+    }
+
+    // Start Server
+    go func() {
+        log.Println("Starting Server")
+        if err := srv.ListenAndServe(); err != nil {
+            log.Fatal(err)
+        }
+    }()
+
+    // Graceful Shutdown
+    waitForShutdown(srv)
+}
 
 func main() {
     // Get a greeting message and print it.
-    api.Register()
-    p := models.Post{ // b == Student{"Bob", 0}
-      Id:1,
-      Title:"Very cool Title",
-      Body: "Very cool Body",
-    }
-    s := fmt.Sprintf("%d %s %s",p.Id, p.Title, p.Body)
-    fmt.Println("LET US SEE "+s)
-    message := blog.Hello("Gladys")
-    fmt.Println(message)
+     Register()
 }
+
+func waitForShutdown(srv *http.Server) {
+    interruptChan := make(chan os.Signal, 1)
+    signal.Notify(interruptChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+
+    // Block until we receive our signal.
+    <-interruptChan
+
+    // Create a deadline to wait for.
+    ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+    defer cancel()
+    srv.Shutdown(ctx)
+
+    log.Println("Shutting down")
+    os.Exit(0)
+}
+
