@@ -18,6 +18,14 @@ replace 3dact.com/blog/api => ./blog/api
 
 replace 3dact.com/blog/dao => ./blog/dao
 
+replace 3dact.com/board => ./board
+
+replace 3dact.com/board/models => ./board/models
+
+replace 3dact.com/board/dao => ./board/dao
+
+replace 3dact.com/board/api => ./board/api
+
 replace 3dact.com/channels => ./channels
 
 replace 3dact.com/channels/models => ./channels/models
@@ -78,6 +86,14 @@ replace 3dact.com/metrics/dao => ./metrics/dao
 
 replace 3dact.com/metrics/api => ./metrics/api
 
+replace 3dact.com/scheduling => ./scheduling
+
+replace 3dact.com/scheduling/models => ./scheduling/models
+
+replace 3dact.com/scheduling/dao => ./scheduling/dao
+
+replace 3dact.com/scheduling/api => ./scheduling/api
+
 replace 3dact.com/settings => ./settings
 
 replace 3dact.com/settings/models => ./settings/models
@@ -103,36 +119,40 @@ replace 3dact.com/workflows/dao => ./workflows/dao
 replace 3dact.com/workflows/api => ./workflows/api
 
 require (
-	3dact.com/blog v0.0.0-00010101000000-000000000000
-	3dact.com/blog/api v0.0.0-00010101000000-000000000000
-	3dact.com/blog/dao v0.0.0-00010101000000-000000000000
-	3dact.com/blog/models v0.0.0-00010101000000-000000000000
-	3dact.com/config v0.0.0-00010101000000-000000000000
-	3dact.com/config/dbconnect v0.0.0-00010101000000-000000000000 // indirect
-	3dact.com/user v0.0.0-00010101000000-000000000000
-	3dact.com/user/api v0.0.0-00010101000000-000000000000
-	3dact.com/user/dao v0.0.0-00010101000000-000000000000
-	3dact.com/user/models v0.0.0-00010101000000-000000000000
-    3dact.com/workflows v0.0.0-00010101000000-000000000000
-    3dact.com/workflows/api v0.0.0-00010101000000-000000000000
-    3dact.com/workflows/dao v0.0.0-00010101000000-000000000000
-    3dact.com/workflows/models v0.0.0-00010101000000-000000000000
     3dact.com/actions v0.0.0-00010101000000-000000000000
     3dact.com/actions/api v0.0.0-00010101000000-000000000000
     3dact.com/actions/dao v0.0.0-00010101000000-000000000000
     3dact.com/actions/models v0.0.0-00010101000000-000000000000
-    3dact.com/events v0.0.0-00010101000000-000000000000
-    3dact.com/events/api v0.0.0-00010101000000-000000000000
-    3dact.com/events/dao v0.0.0-00010101000000-000000000000
-    3dact.com/events/models v0.0.0-00010101000000-000000000000
+	3dact.com/blog v0.0.0-00010101000000-000000000000
+	3dact.com/blog/api v0.0.0-00010101000000-000000000000
+	3dact.com/blog/dao v0.0.0-00010101000000-000000000000
+	3dact.com/blog/models v0.0.0-00010101000000-000000000000
+    3dact.com/board v0.0.0-00010101000000-000000000000
+    3dact.com/board/api v0.0.0-00010101000000-000000000000
+    3dact.com/board/dao v0.0.0-00010101000000-000000000000
+    3dact.com/board/models v0.0.0-00010101000000-000000000000
     3dact.com/channels v0.0.0-00010101000000-000000000000
     3dact.com/channels/api v0.0.0-00010101000000-000000000000
     3dact.com/channels/dao v0.0.0-00010101000000-000000000000
     3dact.com/channels/models v0.0.0-00010101000000-000000000000
+    3dact.com/chat v0.0.0-00010101000000-000000000000
+    3dact.com/chat/api v0.0.0-00010101000000-000000000000
+    3dact.com/chat/dao v0.0.0-00010101000000-000000000000
+    3dact.com/chat/models v0.0.0-00010101000000-000000000000
+	3dact.com/config v0.0.0-00010101000000-000000000000
+	3dact.com/config/dbconnect v0.0.0-00010101000000-000000000000 // indirect
     3dact.com/crawler v0.0.0-00010101000000-000000000000
     3dact.com/crawler/api v0.0.0-00010101000000-000000000000
     3dact.com/crawler/dao v0.0.0-00010101000000-000000000000
     3dact.com/crawler/models v0.0.0-00010101000000-000000000000
+    3dact.com/events v0.0.0-00010101000000-000000000000
+    3dact.com/events/api v0.0.0-00010101000000-000000000000
+    3dact.com/events/dao v0.0.0-00010101000000-000000000000
+    3dact.com/events/models v0.0.0-00010101000000-000000000000
+    3dact.com/log v0.0.0-00010101000000-000000000000
+    3dact.com/log/api v0.0.0-00010101000000-000000000000
+    3dact.com/log/dao v0.0.0-00010101000000-000000000000
+    3dact.com/log/models v0.0.0-00010101000000-000000000000   
     3dact.com/messaging v0.0.0-00010101000000-000000000000
     3dact.com/messaging/api v0.0.0-00010101000000-000000000000
     3dact.com/messaging/dao v0.0.0-00010101000000-000000000000
@@ -145,14 +165,18 @@ require (
     3dact.com/settings/api v0.0.0-00010101000000-000000000000
     3dact.com/settings/dao v0.0.0-00010101000000-000000000000
     3dact.com/settings/models v0.0.0-00010101000000-000000000000
-    3dact.com/chat v0.0.0-00010101000000-000000000000
-    3dact.com/chat/api v0.0.0-00010101000000-000000000000
-    3dact.com/chat/dao v0.0.0-00010101000000-000000000000
-    3dact.com/chat/models v0.0.0-00010101000000-000000000000
-    3dact.com/log v0.0.0-00010101000000-000000000000
-    3dact.com/log/api v0.0.0-00010101000000-000000000000
-    3dact.com/log/dao v0.0.0-00010101000000-000000000000
-    3dact.com/log/models v0.0.0-00010101000000-000000000000
+    3dact.com/scheduling v0.0.0-00010101000000-000000000000
+    3dact.com/scheduling/api v0.0.0-00010101000000-000000000000
+    3dact.com/scheduling/dao v0.0.0-00010101000000-000000000000
+    3dact.com/scheduling/models v0.0.0-00010101000000-000000000000
+	3dact.com/user v0.0.0-00010101000000-000000000000
+	3dact.com/user/api v0.0.0-00010101000000-000000000000
+	3dact.com/user/dao v0.0.0-00010101000000-000000000000
+	3dact.com/user/models v0.0.0-00010101000000-000000000000
+    3dact.com/workflows v0.0.0-00010101000000-000000000000
+    3dact.com/workflows/api v0.0.0-00010101000000-000000000000
+    3dact.com/workflows/dao v0.0.0-00010101000000-000000000000
+    3dact.com/workflows/models v0.0.0-00010101000000-000000000000
 	github.com/callicoder/go-docker-compose v0.0.0-20190725022912-cfca182529bc
 	github.com/go-chi/chi v1.5.0 // indirect
 	github.com/go-chi/render v1.0.1 // indirect
