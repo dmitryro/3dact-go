@@ -2,6 +2,14 @@ module 3dact.com/m/v2
 
 go 1.15
 
+replace 3dact.com/actions => ./actions
+
+replace 3dact.com/actions/models => ./actions/models
+
+replace 3dact.com/actions/dao => ./actions/dao
+
+replace 3dact.com/actions/api => ./actions/api
+
 replace 3dact.com/blog => ./blog
 
 replace 3dact.com/blog/models => ./blog/models
@@ -10,9 +18,73 @@ replace 3dact.com/blog/api => ./blog/api
 
 replace 3dact.com/blog/dao => ./blog/dao
 
+replace 3dact.com/channels => ./channels
+
+replace 3dact.com/channels/models => ./channels/models
+
+replace 3dact.com/channels/dao => ./channels/dao
+
+replace 3dact.com/channels/api => ./channels/api
+
+replace 3dact.com/chat => ./chat
+
+replace 3dact.com/chat/models => ./chat/models
+
+replace 3dact.com/chat/dao => ./chat/dao
+
+replace 3dact.com/chat/api => ./chat/api
+
 replace 3dact.com/config => ./config
 
 replace 3dact.com/config/dbconnect => ./config/dbconnect
+
+replace 3dact.com/crawler => ./crawler
+
+replace 3dact.com/crawler/models => ./crawler/models
+
+replace 3dact.com/crawler/dao => ./crawler/dao
+
+replace 3dact.com/crawler/api => ./crawler/api
+
+replace 3dact.com/events => ./events
+
+replace 3dact.com/events/models => ./events/models
+
+replace 3dact.com/events/dao => ./events/dao
+
+replace 3dact.com/events/api => ./events/api
+
+replace 3dact.com/log => ./log
+
+replace 3dact.com/log/models => ./log/models
+
+replace 3dact.com/log/dao => ./log/dao
+
+replace 3dact.com/log/api => ./log/api
+
+replace 3dact.com/messaging => ./messaging
+
+replace 3dact.com/messaging/models => ./messaging/models
+
+replace 3dact.com/messaging/dao => ./messaging/dao
+
+replace 3dact.com/messaging/api => ./messaging/api
+
+replace 3dact.com/metrics => ./metrics
+
+replace 3dact.com/metrics/models => ./metrics/models
+
+replace 3dact.com/metrics/dao => ./metrics/dao
+
+replace 3dact.com/metrics/api => ./metrics/api
+
+replace 3dact.com/settings => ./settings
+
+replace 3dact.com/settings/models => ./settings/models
+
+replace 3dact.com/settings/dao => ./settings/dao
+
+replace 3dact.com/settings/api => ./settings/api
 
 replace 3dact.com/user => ./user
 
@@ -21,6 +93,14 @@ replace 3dact.com/user/models => ./user/models
 replace 3dact.com/user/dao => ./user/dao
 
 replace 3dact.com/user/api => ./user/api
+
+replace 3dact.com/workflows => ./workflows
+
+replace 3dact.com/workflows/models => ./workflows/models
+
+replace 3dact.com/workflows/dao => ./workflows/dao
+
+replace 3dact.com/workflows/api => ./workflows/api
 
 require (
 	3dact.com/blog v0.0.0-00010101000000-000000000000
@@ -69,6 +149,10 @@ require (
     3dact.com/chat/api v0.0.0-00010101000000-000000000000
     3dact.com/chat/dao v0.0.0-00010101000000-000000000000
     3dact.com/chat/models v0.0.0-00010101000000-000000000000
+    3dact.com/log v0.0.0-00010101000000-000000000000
+    3dact.com/log/api v0.0.0-00010101000000-000000000000
+    3dact.com/log/dao v0.0.0-00010101000000-000000000000
+    3dact.com/log/models v0.0.0-00010101000000-000000000000
 	github.com/callicoder/go-docker-compose v0.0.0-20190725022912-cfca182529bc
 	github.com/go-chi/chi v1.5.0 // indirect
 	github.com/go-chi/render v1.0.1 // indirect
