@@ -110,6 +110,8 @@ replace 3dact.com/user/dao => ./user/dao
 
 replace 3dact.com/user/api => ./user/api
 
+replace 3dact.com/utils => ./utils
+
 replace 3dact.com/workflows => ./workflows
 
 replace 3dact.com/workflows/models => ./workflows/models
